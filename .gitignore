@@ -304,3 +304,5 @@ TSWLatexianTemp*
 mpstmacros.pdf
 *.hd
 mpstmacros.sty
+mpstmacros.ins
+README.txt
