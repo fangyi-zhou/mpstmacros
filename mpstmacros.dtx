@@ -9,12 +9,12 @@
 mpstmacros:| Macros for multiparty session types
     Author:| Fangyi Zhou
     E-mail:| me@fangyi.io
-   License:| Released under the LaTeX Project Public License v1.3c or later
-       See:| http://www.latex-project.org/lppl.txt
+   License:| The Unlicense
+       See:| https://unlicense.org/
 
 
 Short description:
-Some text about the package: probably the same as the abstract.
+A package for multiparty session type macros
 %</readme>
 %<*internal>
 \fi
@@ -94,6 +94,10 @@ Running "make install" installs the files in the local TeX tree.
 \documentclass{ltxdoc}
 \usepackage[a4paper,margin=25mm,left=50mm,nohead]{geometry}
 \usepackage[numbered]{hypdoc}
+\usepackage[T1]{fontenc}
+\usepackage{palatino}
+\usepackage[scale=0.85]{FiraMono}
+\usepackage{FiraSans}
 \usepackage{\jobname}
 \EnableCrossrefs
 \CodelineIndex
@@ -114,13 +118,9 @@ Running "make install" installs the files in the local TeX tree.
 %\date{Released \filedate}
 %
 %\maketitle
-%
+%\iffalse
 %\changes{v1.00}{2021/11/26}{First public release}
-%
-% \begin{abstract}
-% ==== Put abstract text here. ====
-% \end{abstract}
-%
+%\fi
 % \section{Usage}
 %
 % ==== Put descriptive text here. ====
