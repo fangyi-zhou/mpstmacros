@@ -12,7 +12,6 @@ mpstmacros:| Macros for multiparty session types
    License:| The Unlicense
        See:| https://unlicense.org/
 
-
 Short description:
 A package for multiparty session type macros
 %</readme>
@@ -103,6 +102,7 @@ Running "make install" installs the files in the local TeX tree.
 %<*package>
     [2021/11/26 v1.00 A new LaTeX package]
 %</package>
+%<package>\RequirePackage[svgnames]{xcolor}
 %<*driver>
 \documentclass{ltxdoc}
 \usepackage[a4paper,margin=25mm,left=50mm,nohead]{geometry}
@@ -122,7 +122,7 @@ Running "make install" installs the files in the local TeX tree.
 % \fi
 %
 % \GetFileInfo{\jobname.dtx}
-% \DoNotIndex{\newcommand,\newenvironment}
+% \DoNotIndex{\newcommand,\newenvironment,\color,\colorlet,\withcolour,\endinput}
 %
 %\title{\textsf{mpstmacros} --- Macros for multiparty session types%
 %\thanks{This file describes version \fileversion, last revised \filedate.}
@@ -134,21 +134,57 @@ Running "make install" installs the files in the local TeX tree.
 %\iffalse
 %\changes{v1.00}{2021/11/26}{First public release}
 %\fi
-% \section{Usage}
+% \begin{abstract}
 %
-% ==== Put descriptive text here. ====
+% This package contains macros to typeset multiparty session types with
+% standard constructs.
+% Different syntactic categories are coloured differently, giving a better
+% visual presentation and prevent potential confusions.
 %
-% \DescribeMacro{\dummyMacro}
-% This macro does nothing.\index{doing nothing|usage} It is merely an
-% example.  If this were a real macro, you would put a paragraph here
-% describing what the macro is supposed to do, what its mandatory and
-% optional arguments are, and so forth.
+% \end{abstract}
 %
-% \DescribeEnv{dummyEnv}
-% This environment does nothing.  It is merely an example.
-% If this were a real environment, you would put a paragraph here
-% describing what the environment is supposed to do, what its
-% mandatory and optional arguments are, and so forth.
+% \section{Colouring and Formatting}
+% We first describe the macros for setting colours: by design, we wish to
+% give distinct colours for different syntax categories: namely,
+% participants (roles), message labels, payload types, local types and
+% global types.
+% Optionally, type variables can be assigned a different colour, but
+% is usually emphasised with a boldface font.
+
+% \DescribeMacro{\colourRole}
+% |\colourRole| defines the colour for roles, by default it is set to
+% \withcolour{\colourRole}{Teal}.
+%
+% \DescribeMacro{\colourLabel}
+% |\colourLabel| defines the colour for labels, by default it is set to
+% \withcolour{\colourLabel}{Indigo}.
+%
+% \DescribeMacro{\colourPayload}
+% |\colourPayload| defines the colour for payload types, by default it is set to
+% \withcolour{\colourPayload}{DarkOrchid}.
+%
+% \DescribeMacro{\colourLocal}
+% |\colourLocal| defines the colour for local session types, by default it is set to
+% \withcolour{\colourLocal}{NavyBlue}.
+%
+% \DescribeMacro{\colourGlobal}
+% |\colourGlobal| defines the colour for payload types, by default it is set to
+% \withcolour{\colourGlobal}{VioletRed}.
+%
+% \DescribeMacro{\colourProc}
+% |\colourProc| defines the colour for processes, by default it is set to
+% \withcolour{\colourProc}{Maroon}.
+%
+% Then, we use these colours to define formatting macros: by default you
+% should not need to tweak them or use them directly.
+%
+% \DescribeMacro{\RoleFmt}
+% \DescribeMacro{\LabelFmt}
+% \DescribeMacro{\PayloadFmt}
+% \DescribeMacro{\LocalFmt}
+% \DescribeMacro{\GlobalFmt}
+% \DescribeMacro{\ProcFmt}
+% TODO.
 %
 %\StopEventually{^^A
 %  \PrintChanges
@@ -159,7 +195,17 @@ Running "make install" installs the files in the local TeX tree.
 %
 %    \begin{macrocode}
 %<*package>
-
+%    \end{macrocode}
+% We first define the colours.
+%    \begin{macrocode}
+\newcommand{\withcolour}[2]{{\color{#1}{#2}}}
+\newcommand{\colourRole}{Teal}
+\newcommand{\colourLabel}{Indigo}
+\newcommand{\colourPayload}{DarkOrchid}
+\newcommand{\colourLocal}{NavyBlue}
+\newcommand{\colourGlobal}{VioletRed}
+\newcommand{\colourProc}{Maroon}
+\newcommand{\colourNet}{black}
 %    \end{macrocode}
 % \begin{macro}{\dummyMacro}
 % This is a dummy macro.  If it did anything, we'd describe its
