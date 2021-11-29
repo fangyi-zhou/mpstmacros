@@ -122,7 +122,8 @@ Running "make install" installs the files in the local TeX tree.
 % \fi
 %
 % \GetFileInfo{\jobname.dtx}
-% \DoNotIndex{\newcommand,\newenvironment,\color,\colorlet,\withcolour,\endinput}
+% \DoNotIndex{\newcommand, \newenvironment, \color, \colorlet, \withcolour,
+%             \endinput, \upshape, \textbf, \textsf, \texttt}
 %
 %\title{\textsf{mpstmacros} --- Macros for multiparty session types%
 %\thanks{This file describes version \fileversion, last revised \filedate.}
@@ -150,41 +151,85 @@ Running "make install" installs the files in the local TeX tree.
 % global types.
 % Optionally, type variables can be assigned a different colour, but
 % is usually emphasised with a boldface font.
-
+%
+% \begin{itemize}
+% \item
 % \DescribeMacro{\colourRole}
 % |\colourRole| defines the colour for roles, by default it is set to
 % \withcolour{\colourRole}{Teal}.
 %
+% \item
 % \DescribeMacro{\colourLabel}
 % |\colourLabel| defines the colour for labels, by default it is set to
 % \withcolour{\colourLabel}{Indigo}.
 %
+% \item
 % \DescribeMacro{\colourPayload}
-% |\colourPayload| defines the colour for payload types, by default it is set to
-% \withcolour{\colourPayload}{DarkOrchid}.
+% |\colourPayload| defines the colour for payload types, by default it is
+% set to \withcolour{\colourPayload}{DarkOrchid}.
 %
+% \item
 % \DescribeMacro{\colourLocal}
-% |\colourLocal| defines the colour for local session types, by default it is set to
-% \withcolour{\colourLocal}{NavyBlue}.
+% |\colourLocal| defines the colour for local session types, by default it
+% is set to \withcolour{\colourLocal}{NavyBlue}.
 %
+% \item
 % \DescribeMacro{\colourGlobal}
-% |\colourGlobal| defines the colour for payload types, by default it is set to
-% \withcolour{\colourGlobal}{VioletRed}.
+% |\colourGlobal| defines the colour for payload types, by default it is
+% set to \withcolour{\colourGlobal}{VioletRed}.
 %
+% \item
 % \DescribeMacro{\colourProc}
 % |\colourProc| defines the colour for processes, by default it is set to
 % \withcolour{\colourProc}{Maroon}.
 %
+% \item
+% \DescribeMacro{\colourProcVar}
+% |\colourProcVar| defines the colour for process variables, by default it
+% is set to \withcolour{\colourProcVar}{Red}. Note that this colour does
+% not apply to type variables in a recursive type.
+% \end{itemize}
+%
 % Then, we use these colours to define formatting macros: by default you
 % should not need to tweak them or use them directly.
 %
+% \begin{itemize}
+% \item
 % \DescribeMacro{\RoleFmt}
-% \DescribeMacro{\LabelFmt}
+% |\RoleFmt| applies the role colour, and uses sans serif font in boldface
+% by default, for example, $\RoleFmt{A}, \RoleFmt{B}, \RoleFmt{C},
+% \RoleFmt{p}, \RoleFmt{q}, \RoleFmt{r}$.
+%
+% \item
 % \DescribeMacro{\PayloadFmt}
+% |\PayloadFmt| applies the payload type colour, and uses typewriter font
+% by default, for example, $\PayloadFmt{S}, \PayloadFmt{T},
+% \PayloadFmt{int}, \PayloadFmt{bool}$.
+%
+% \item
+% \DescribeMacro{\LabelFmt}
 % \DescribeMacro{\LocalFmt}
 % \DescribeMacro{\GlobalFmt}
 % \DescribeMacro{\ProcFmt}
-% TODO.
+% |\LabelFmt|, |\LocalFmt|, |\GlobalFmt|, and |\ProcFmt|
+% simply apply the corresponding colours for the given syntax category.
+%
+% \item
+% \DescribeMacro{\TRecVarFmt}
+% |\TRecVarFmt| is used to format type-level recursion variables, for
+% example in a recursive global type or a recursive local type. By default,
+% a boldface math font is used.
+%
+% \item
+% \DescribeMacro{\PRecVarFmt}
+% |\PRecVarFmt| is used to format process-level recursion variables, for
+% example in a recursive process. By default, the macros applies its
+% colour.\footnote{The reason why there are two macros for recursion
+% variables is that (1) On the type level, we usually use an equi-recursive
+% view to identify recursive types and their unfoldings, but not on the
+% process level; and (2) Type variables and process variables should
+% nonetheless be in separate syntactic categories or namespaces.}
+% \end{itemize}
 %
 %\StopEventually{^^A
 %  \PrintChanges
@@ -198,14 +243,21 @@ Running "make install" installs the files in the local TeX tree.
 %    \end{macrocode}
 % We first define the colours.
 %    \begin{macrocode}
-\newcommand{\withcolour}[2]{{\color{#1}{#2}}}
 \newcommand{\colourRole}{Teal}
 \newcommand{\colourLabel}{Indigo}
 \newcommand{\colourPayload}{DarkOrchid}
 \newcommand{\colourLocal}{NavyBlue}
 \newcommand{\colourGlobal}{VioletRed}
 \newcommand{\colourProc}{Maroon}
+\newcommand{\colourProcVar}{Red}
 \newcommand{\colourNet}{black}
+%    \end{macrocode}
+% Then we define the formatting macros:
+%    \begin{macrocode}
+\newcommand{\withcolour}[2]{{\color{#1}{#2}}}
+\newcommand{\RoleFmt}[1]{\withcolour{\colourRole}{\textbf{\textsf{\upshape #1}}}}
+\newcommand{\LabelFmt}[1]{\withcolour{\colourLabel}{#1}}
+\newcommand{\PayloadFmt}[1]{\withcolour{\colourPayload}{\texttt{#1}}}
 %    \end{macrocode}
 % \begin{macro}{\dummyMacro}
 % This is a dummy macro.  If it did anything, we'd describe its
