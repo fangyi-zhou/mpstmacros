@@ -100,7 +100,7 @@ Running "make install" installs the files in the local TeX tree.
 %<package>\NeedsTeXFormat{LaTeX2e}[1999/12/01]
 %<package>\ProvidesPackage{mpstmacros}
 %<*package>
-    [2021/11/26 v1.00 A new LaTeX package]
+    [2021/11/29 Pre-release]
 %</package>
 %<package>\RequirePackage[svgnames]{xcolor}
 %<package>\RequirePackage{xifthen}
@@ -140,12 +140,12 @@ Running "make install" installs the files in the local TeX tree.
 %\thanks{This file describes version \fileversion, last revised \filedate.}
 %}
 %\author{Fangyi Zhou\thanks{E-mail: me@fangyi.io}}
+%\iffalse
 %\date{Released \filedate}
+%\fi
+%\date{Work in Progress}
 %
 %\maketitle
-%\iffalse
-%\changes{v1.00}{2021/11/26}{First public release}
-%\fi
 % \begin{abstract}
 %
 % This package contains macros to typeset multiparty session types with
@@ -294,6 +294,7 @@ Running "make install" installs the files in the local TeX tree.
 %     \end{array}
 %   \]
 % \section{Processes}
+% This is future work.
 %
 % \section{Implementation}
 %
@@ -383,14 +384,6 @@ Running "make install" installs the files in the local TeX tree.
 }}%
 \newcommand{\ltEnd}{\LocalFmt{\texttt{\upshape end}}}%
 %    \end{macrocode}
-% \begin{macro}{\dummyMacro}
-% This is a dummy macro.  If it did anything, we'd describe its
-% implementation here.
-%    \begin{macrocode}
-\newcommand{\dummyMacro}{}
-%    \end{macrocode}
-% \end{macro}
-%
 %    \begin{macrocode}
 \endinput
 %</package>
