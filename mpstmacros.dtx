@@ -214,22 +214,28 @@ Running "make install" installs the files in the local TeX tree.
 % \DescribeMacro{\ProcFmt}
 % |\LabelFmt|, |\LocalFmt|, |\GlobalFmt|, and |\ProcFmt|
 % simply apply the corresponding colours for the given syntax category.
+% For example, label $\LabelFmt{l}$, local type $\LocalFmt{L}$, global type
+% $\GlobalFmt{G}$, and process $\ProcFmt{P}$.
 %
 % \item
 % \DescribeMacro{\TRecVarFmt}
 % |\TRecVarFmt| is used to format type-level recursion variables, for
 % example in a recursive global type or a recursive local type. By default,
-% a boldface math font is used.
+% a boldface math font is used, for example $\TRecVarFmt{t}$ (no colour is
+% attached, you can put it in a |\LocalFmt| or |\GlobalFmt| to give
+% corresponding colour, like $\LocalFmt{\TRecVarFmt{t}}$ or
+% $\GlobalFmt{\TRecVarFmt{t'}}$).
 %
 % \item
 % \DescribeMacro{\PRecVarFmt}
 % |\PRecVarFmt| is used to format process-level recursion variables, for
 % example in a recursive process. By default, the macros applies its
-% colour.\footnote{The reason why there are two macros for recursion
-% variables is that (1) On the type level, we usually use an equi-recursive
-% view to identify recursive types and their unfoldings, but not on the
-% process level; and (2) Type variables and process variables should
-% nonetheless be in separate syntactic categories or namespaces.}
+% colour, for example, $\PRecVarFmt{X}$.\footnotemark
+% \footnotetext{The reason why there are two macros for recursion variables
+% is that (1) On the type level, we usually use an equi-recursive view to
+% identify recursive types and their unfoldings, but not on the process
+% level; and (2) Type variables and process variables should nonetheless be
+% in separate syntactic categories or namespaces.}
 % \end{itemize}
 %
 %\StopEventually{^^A
@@ -257,8 +263,13 @@ Running "make install" installs the files in the local TeX tree.
 %    \begin{macrocode}
 \newcommand{\withcolour}[2]{{\color{#1}{#2}}}
 \newcommand{\RoleFmt}[1]{\withcolour{\colourRole}{\textbf{\textsf{\upshape #1}}}}
-\newcommand{\LabelFmt}[1]{\withcolour{\colourLabel}{#1}}
 \newcommand{\PayloadFmt}[1]{\withcolour{\colourPayload}{\texttt{#1}}}
+\newcommand{\LabelFmt}[1]{\withcolour{\colourLabel}{#1}}
+\newcommand{\LocalFmt}[1]{\withcolour{\colourLocal}{#1}}
+\newcommand{\GlobalFmt}[1]{\withcolour{\colourGlobal}{#1}}
+\newcommand{\ProcFmt}[1]{\withcolour{\colourProc}{#1}}
+\newcommand{\TRecVarFmt}[1]{\mathbf{#1}}
+\newcommand{\PRecVarFmt}[1]{\withcolour{\colourProcVar}{#1}}
 %    \end{macrocode}
 % \begin{macro}{\dummyMacro}
 % This is a dummy macro.  If it did anything, we'd describe its
