@@ -357,8 +357,10 @@ Running "make install" installs the files in the local TeX tree.
 \TRecVarFmt{#1}%
 }}%
 \newcommand{\gtEnd}{\GlobalFmt{\texttt{\upshape end}}}%
+%    \end{macrocode}
 %
 % Here we define local type macros.
+%    \begin{macrocode}
 \newcommand{\ltCRaw}[4][]{\LocalFmt{%
 \ifempty{#1}{%
 {#2} {#4} \left\{{#3}\right\}%
