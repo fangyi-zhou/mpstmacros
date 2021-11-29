@@ -103,6 +103,7 @@ Running "make install" installs the files in the local TeX tree.
     [2021/11/26 v1.00 A new LaTeX package]
 %</package>
 %<package>\RequirePackage[svgnames]{xcolor}
+%<package>\RequirePackage{xifthen}
 %<*driver>
 \documentclass{ltxdoc}
 \usepackage[a4paper,margin=25mm,left=50mm,nohead]{geometry}
@@ -112,6 +113,7 @@ Running "make install" installs the files in the local TeX tree.
 \usepackage{mathpazo}
 \usepackage[scale=0.85]{FiraMono}
 \usepackage{FiraSans}
+\usepackage{amsmath}
 \usepackage{\jobname}
 \EnableCrossrefs
 \CodelineIndex
@@ -124,7 +126,15 @@ Running "make install" installs the files in the local TeX tree.
 %
 % \GetFileInfo{\jobname.dtx}
 % \DoNotIndex{\newcommand, \newenvironment, \color, \colorlet, \withcolour,
-%             \endinput, \upshape, \textbf, \textsf, \texttt, \mathbf}
+%             \endinput, \upshape, \textbf, \textsf, \texttt, \mathbf, \mu,
+%             \left, \right, \ifempty, \to, \ifthenelse, \isempty,
+%             \mathbin, \mspace, \oplus}
+% \iffalse
+% https://tex.stackexchange.com/a/124809
+% \fi
+% \expandafter\DoNotIndex\expandafter{\string\{}
+% \expandafter\DoNotIndex\expandafter{\string\}}
+% \expandafter\DoNotIndex\expandafter{\string\&}
 %
 %\title{\textsf{mpstmacros} --- Macros for multiparty session types%
 %\thanks{This file describes version \fileversion, last revised \filedate.}
@@ -243,10 +253,46 @@ Running "make install" installs the files in the local TeX tree.
 %  \PrintIndex
 %}
 %
+% \newcommand{\rolep}{\RoleFmt{p}}
+% \newcommand{\roleq}{\RoleFmt{q}}
+% \newcommand{\lblL}[1][]{\LabelFmt{l_{#1}}}
+% \newcommand{\gtG}[1][]{\GlobalFmt{G_{#1}}}
+% \newcommand{\gtGi}[1][]{\GlobalFmt{{G}'_{#1}}}
+% \newcommand{\ltL}[1][]{\LocalFmt{L_{#1}}}
+% \newcommand{\ltLi}[1][]{\LocalFmt{{L}'_{#1}}}
 % \section{Global Types}
+% We show the syntax of global types below:
+%   \[
+%     \begin{array}{rcll}
+%       \gtG & ::= & & \text{Global Types} \\
+%            & \mid  & \gtComm[i \in I]{\rolep}{\roleq}{\lblL[i]}{\gtGi[i]}
+%                    & \text{Message} \\
+%            & \mid  & \gtRec{t}{\gtG}
+%                    & \text{Recursion} \\
+%            & \mid  & \gtRecVar{t}
+%                    & \text{Type Variable} \\
+%            & \mid  & \gtEnd
+%                    & \text{End}
+%     \end{array}
+%   \]
 %
 % \section{Local Types}
-%
+% We show the syntax of local types below:
+%   \[
+%     \begin{array}{rcll}
+%       \ltL & ::= & & \text{Local Types} \\
+%            & \mid  & \ltExtC[i \in I]{\rolep}{\lblL[i]}{\ltLi[i]}
+%                    & \text{Receiving} \\
+%            & \mid  & \ltIntC[i \in I]{\rolep}{\lblL[i]}{\ltLi[i]}
+%                    & \text{Sending} \\
+%            & \mid  & \ltRec{t}{\ltL}
+%                    & \text{Recursion} \\
+%            & \mid  & \ltRecVar{t}
+%                    & \text{Type Variable} \\
+%            & \mid  & \ltEnd
+%                    & \text{End}
+%     \end{array}
+%   \]
 % \section{Processes}
 %
 % \section{Implementation}
@@ -254,28 +300,86 @@ Running "make install" installs the files in the local TeX tree.
 %    \begin{macrocode}
 %<*package>
 %    \end{macrocode}
+%
 % We first define the colours.
 %    \begin{macrocode}
-\newcommand{\colourRole}{Teal}
-\newcommand{\colourLabel}{Indigo}
-\newcommand{\colourPayload}{DarkOrchid}
-\newcommand{\colourLocal}{NavyBlue}
-\newcommand{\colourGlobal}{VioletRed}
-\newcommand{\colourProc}{Maroon}
-\newcommand{\colourProcVar}{Red}
-\newcommand{\colourNet}{black}
+\newcommand{\colourRole}{Teal}%
+\newcommand{\colourLabel}{Indigo}%
+\newcommand{\colourPayload}{DarkOrchid}%
+\newcommand{\colourLocal}{NavyBlue}%
+\newcommand{\colourGlobal}{VioletRed}%
+\newcommand{\colourProc}{Maroon}%
+\newcommand{\colourProcVar}{Red}%
+\newcommand{\colourNet}{black}%
 %    \end{macrocode}
+%
+% Some auxiliary helper functions:
+%    \begin{macrocode}
+\newcommand{\withcolour}[2]{{\color{#1}{#2}}}%
+\newcommand{\ifempty}[3]{%
+  \ifthenelse{\isempty{#1}}{#2}{#3}%
+}%
+\newcommand{\commChoice}[2]{%
+  {#1} \mathbin{.} {#2}%
+}%
+%    \end{macrocode}
+%
 % Then we define the formatting macros:
 %    \begin{macrocode}
-\newcommand{\withcolour}[2]{{\color{#1}{#2}}}
-\newcommand{\RoleFmt}[1]{\withcolour{\colourRole}{\textbf{\textsf{\upshape #1}}}}
-\newcommand{\PayloadFmt}[1]{\withcolour{\colourPayload}{\texttt{#1}}}
-\newcommand{\LabelFmt}[1]{\withcolour{\colourLabel}{#1}}
-\newcommand{\LocalFmt}[1]{\withcolour{\colourLocal}{#1}}
-\newcommand{\GlobalFmt}[1]{\withcolour{\colourGlobal}{#1}}
-\newcommand{\ProcFmt}[1]{\withcolour{\colourProc}{#1}}
-\newcommand{\TRecVarFmt}[1]{\mathbf{#1}}
-\newcommand{\PRecVarFmt}[1]{\withcolour{\colourProcVar}{#1}}
+\newcommand{\RoleFmt}[1]{\withcolour{\colourRole}{\textbf{\textsf{\upshape #1}}}}%
+\newcommand{\PayloadFmt}[1]{\withcolour{\colourPayload}{\texttt{#1}}}%
+\newcommand{\LabelFmt}[1]{\withcolour{\colourLabel}{#1}}%
+\newcommand{\LocalFmt}[1]{\withcolour{\colourLocal}{#1}}%
+\newcommand{\GlobalFmt}[1]{\withcolour{\colourGlobal}{#1}}%
+\newcommand{\ProcFmt}[1]{\withcolour{\colourProc}{#1}}%
+\newcommand{\TRecVarFmt}[1]{\mathbf{#1}}%
+\newcommand{\PRecVarFmt}[1]{\withcolour{\colourProcVar}{#1}}%
+%    \end{macrocode}
+%
+% Here we define global type macros.
+%    \begin{macrocode}
+\newcommand{\gtCommRaw}[4][]{\GlobalFmt{%
+\ifempty{#1}{%
+{{#2} \to {#3} \left\{ {#4} \right\} }%
+}{%
+{{#2} \to {#3} {\left\{ {#4} \right\}}_{\withcolour{black}{#1}}}%
+}}}%
+\newcommand{\gtComm}[5][]{\gtCommRaw[#1]{#2}{#3}{%
+  \commChoice{#4}{#5}%
+}}%
+\newcommand{\gtCommSingle}[4]{\GlobalFmt{%
+  {{#1} \to {#2} : \commChoice{#3}{#4}}%
+}}%
+\newcommand{\gtRec}[2]{\GlobalFmt{%
+\mu\TRecVarFmt{#1}.{#2}%
+}}%
+\newcommand{\gtRecVar}[1]{\GlobalFmt{%
+\TRecVarFmt{#1}%
+}}%
+\newcommand{\gtEnd}{\GlobalFmt{\texttt{\upshape end}}}%
+%
+% Here we define local type macros.
+\newcommand{\ltCRaw}[4][]{\LocalFmt{%
+\ifempty{#1}{%
+{#2} {#4} \left\{{#3}\right\}%
+}{%
+{#2} {#4} {\left\{{#3}\right\}}_{\withcolour{black}{#1}}%
+}}}%
+\newcommand{\ltIntCSymbol}{\LocalFmt{\oplus\mspace{-1mu}}}%
+\newcommand{\ltExtCSymbol}{\LocalFmt{\&}}%
+\newcommand{\ltIntCRaw}[3][]{\ltCRaw[#1]{#2}{#3}{\ltIntCSymbol}}%
+\newcommand{\ltExtCRaw}[3][]{\ltCRaw[#1]{#2}{#3}{\ltExtCSymbol}}%
+\newcommand{\ltIntC}[4][]{\ltIntCRaw[#1]{#2}{\commChoice{#3}{#4}}}%
+\newcommand{\ltExtC}[4][]{\ltExtCRaw[#1]{#2}{\commChoice{#3}{#4}}}%
+\newcommand{\ltIntCSingle}[3]{{#1}\ltIntCSymbol\mspace{2mu}{\commChoice{#2}{#3}}}%
+\newcommand{\ltExtCSingle}[3]{{#1}\ltExtCSymbol{\commChoice{#2}{#3}}}%
+\newcommand{\ltRec}[2]{\LocalFmt{%
+\mu\TRecVarFmt{#1}.{#2}%
+}}%
+\newcommand{\ltRecVar}[1]{\LocalFmt{%
+\TRecVarFmt{#1}%
+}}%
+\newcommand{\ltEnd}{\LocalFmt{\texttt{\upshape end}}}%
 %    \end{macrocode}
 % \begin{macro}{\dummyMacro}
 % This is a dummy macro.  If it did anything, we'd describe its
