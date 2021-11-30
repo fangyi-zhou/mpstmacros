@@ -127,9 +127,9 @@ Running "make install" installs the files in the local TeX tree.
 % \fi
 %
 % \GetFileInfo{\jobname.dtx}
-% \DoNotIndex{\newcommand, \newenvironment, \color, \colorlet, \withcolour,
+% \DoNotIndex{\newcommand, \newenvironment, \color, \colorlet,
 %             \endinput, \upshape, \textbf, \textsf, \texttt, \mathbf, \mu,
-%             \left, \right, \ifempty, \to, \ifthenelse, \isempty,
+%             \left, \right, \to, \ifthenelse, \isempty,
 %             \mathbin, \mspace, \oplus}
 % \iffalse
 % https://tex.stackexchange.com/a/124809
@@ -165,6 +165,7 @@ Running "make install" installs the files in the local TeX tree.
 % Optionally, type variables can be assigned a different colour, but
 % is usually emphasised with a boldface font.
 %
+% \newcommand{\withcolour}[2]{{\color{#1}{#2}}}%
 % \begin{itemize}
 % \item
 % \DescribeMacro{\colourRole}
@@ -318,8 +319,8 @@ Running "make install" installs the files in the local TeX tree.
 %
 % Some auxiliary helper functions:
 %    \begin{macrocode}
-\newcommand{\withcolour}[2]{{\color{#1}{#2}}}%
-\newcommand{\ifempty}[3]{%
+\newcommand*{\mpstmacros@withcolour}[2]{{\color{#1}{#2}}}%
+\newcommand*{\mpstmacros@ifempty}[3]{%
   \ifthenelse{\isempty{#1}}{#2}{#3}%
 }%
 \newcommand{\commChoice}[2]{%
@@ -329,23 +330,23 @@ Running "make install" installs the files in the local TeX tree.
 %
 % Then we define the formatting macros:
 %    \begin{macrocode}
-\newcommand{\RoleFmt}[1]{\withcolour{\colourRole}{\textsf{\upshape #1}}}%
-\newcommand{\PayloadFmt}[1]{\withcolour{\colourPayload}{\texttt{#1}}}%
-\newcommand{\LabelFmt}[1]{\withcolour{\colourLabel}{#1}}%
-\newcommand{\LocalFmt}[1]{\withcolour{\colourLocal}{#1}}%
-\newcommand{\GlobalFmt}[1]{\withcolour{\colourGlobal}{#1}}%
-\newcommand{\ProcFmt}[1]{\withcolour{\colourProc}{#1}}%
+\newcommand{\RoleFmt}[1]{\mpstmacros@withcolour{\colourRole}{\textsf{\upshape #1}}}%
+\newcommand{\PayloadFmt}[1]{\mpstmacros@withcolour{\colourPayload}{\texttt{#1}}}%
+\newcommand{\LabelFmt}[1]{\mpstmacros@withcolour{\colourLabel}{#1}}%
+\newcommand{\LocalFmt}[1]{\mpstmacros@withcolour{\colourLocal}{#1}}%
+\newcommand{\GlobalFmt}[1]{\mpstmacros@withcolour{\colourGlobal}{#1}}%
+\newcommand{\ProcFmt}[1]{\mpstmacros@withcolour{\colourProc}{#1}}%
 \newcommand{\TRecVarFmt}[1]{\mathbf{#1}}%
-\newcommand{\PRecVarFmt}[1]{\withcolour{\colourProcVar}{#1}}%
+\newcommand{\PRecVarFmt}[1]{\mpstmacros@withcolour{\colourProcVar}{#1}}%
 %    \end{macrocode}
 %
 % Here we define global type macros.
 %    \begin{macrocode}
 \newcommand{\gtCommRaw}[4][]{\GlobalFmt{%
-\ifempty{#1}{%
+\mpstmacros@ifempty{#1}{%
 {{#2} \to {#3} \left\{ {#4} \right\} }%
 }{%
-{{#2} \to {#3} {\left\{ {#4} \right\}}_{\withcolour{black}{#1}}}%
+{{#2} \to {#3} {\left\{ {#4} \right\}}_{\mpstmacros@withcolour{black}{#1}}}%
 }}}%
 \newcommand{\gtComm}[5][]{\gtCommRaw[#1]{#2}{#3}{%
   \commChoice{#4}{#5}%
@@ -365,10 +366,10 @@ Running "make install" installs the files in the local TeX tree.
 % Here we define local type macros.
 %    \begin{macrocode}
 \newcommand{\ltCRaw}[4][]{\LocalFmt{%
-\ifempty{#1}{%
+\mpstmacros@ifempty{#1}{%
 {#2} {#4} \left\{{#3}\right\}%
 }{%
-{#2} {#4} {\left\{{#3}\right\}}_{\withcolour{black}{#1}}%
+{#2} {#4} {\left\{{#3}\right\}}_{\mpstmacros@withcolour{black}{#1}}%
 }}}%
 \newcommand{\ltIntCSymbol}{\LocalFmt{\oplus\mspace{-1mu}}}%
 \newcommand{\ltExtCSymbol}{\LocalFmt{\&}}%
