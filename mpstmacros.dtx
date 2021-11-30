@@ -251,24 +251,22 @@ Running "make install" installs the files in the local TeX tree.
 % in separate syntactic categories or namespaces.}
 % \end{itemize}
 %
-%\StopEventually{^^A
-%  \PrintChanges
-%  \PrintIndex
-%}
-%
 % \newcommand{\rolep}{\RoleFmt{p}}
 % \newcommand{\roleq}{\RoleFmt{q}}
+% \newcommand{\roleA}{\RoleFmt{A}}
+% \newcommand{\roleB}{\RoleFmt{B}}
 % \newcommand{\lblL}[1][]{\LabelFmt{l_{#1}}}
 % \newcommand{\gtG}[1][]{\GlobalFmt{G_{#1}}}
 % \newcommand{\gtGi}[1][]{\GlobalFmt{{G}'_{#1}}}
 % \newcommand{\ltL}[1][]{\LocalFmt{L_{#1}}}
 % \newcommand{\ltLi}[1][]{\LocalFmt{{L}'_{#1}}}
+% \newcommand{\payloadT}[1][]{\PayloadFmt{T$_{#1}$}}
 % \section{Global Types}
 % We show the syntax of global types below:
 %   \[
 %     \begin{array}{rcll}
 %       \gtG & ::= & & \text{Global Types} \\
-%            & \mid  & \gtComm[i \in I]{\rolep}{\roleq}{\lblL[i]}{\gtGi[i]}
+%            & \mid  & \gtComm[i \in I]{\rolep}{\roleq}{\lblL[i]}{\payloadT[i]}{\gtGi[i]}
 %                    & \text{Message} \\
 %            & \mid  & \gtRec{t}{\gtG}
 %                    & \text{Recursion} \\
@@ -279,14 +277,106 @@ Running "make install" installs the files in the local TeX tree.
 %     \end{array}
 %   \]
 %
+% \DescribeMacro{\gtComm}
+% Message construct is rendered using |\gtComm|, it takes 6 arguments
+% (including an optional argument for the subscript, usually for the index set),
+% the remaining arguments are for sending role, receiving role, message
+% label, payload type, and continuation.
+% For example,
+% \begin{verbatim}
+% \gtComm[i \in I]{\rolep}{\roleq}{\lblL[i]}{\payloadT[i]}{\gtGi[i]}
+% \end{verbatim}
+% $$\gtComm[i \in I]{\rolep}{\roleq}{\lblL[i]}{\payloadT[i]}{\gtGi[i]}$$
+%
+% \DescribeMacro{\gtCommSingle}
+% The singular form is rendered using |\gtCommSingle|, which does not
+% include curly braces.
+% It takes 5 arguments, same as |\gtComm| less the optional argument.
+% For example,
+% \begin{verbatim}
+% \gtCommSingle{\rolep}{\roleq}{\lblL}{\payloadT}{\gtGi}
+% \end{verbatim}
+% $$\gtCommSingle{\rolep}{\roleq}{\lblL}{\payloadT}{\gtGi}$$
+%
+% When giving empty arguments to some of the arguments, selected constructs
+% are not rendered by default.
+% This is done via the macro |\commChoice|, which takes 3 arguments, label,
+% payload type, and continuation respectively.
+% This formatting macro is shared between global and local types.
+% When the payload argument is empty, the parentheses are not rendered.
+% For example,
+% \begin{verbatim}
+% \gtCommSingle{\rolep}{\roleq}{\lblL}{}{\gtGi}
+% \end{verbatim}
+% $$\gtCommSingle{\rolep}{\roleq}{\lblL}{}{\gtGi}$$
+% When the continuation argument is empty, the dot (indicating sequencing)
+% is not rendered.
+% For example,
+% \begin{verbatim}
+% \gtCommSingle{\rolep}{\roleq}{\lblL}{\payloadT}{}
+% \end{verbatim}
+% $$\gtCommSingle{\rolep}{\roleq}{\lblL}{\payloadT}{}$$
+%
+% \DescribeMacro{\gtCommRaw}
+% |\gtCommRaw| can also be used to render message construct, giving more
+% flexibility for users to layout the internal elements.
+% It takes 4 arguments (including an optional argument for the subscript),
+% the remaining arguments are the sending role, receiving role, and the
+% content inside the curly braces.
+% The curly braces are dynamically size using |\left| and |\right|.
+% This is especially helpful when typesetting examples, for example:
+% \[
+%   \gtCommRaw{\roleA}{\roleB}{
+%     \begin{array}{@{}l@{}}
+%       \commChoice{\LabelFmt{hello}}{\PayloadFmt{string}}{\gtG[hello]} \\
+%       \commChoice{\LabelFmt{bye}}{\PayloadFmt{unit}}{\gtG[bye]}
+%     \end{array}
+%   }
+% \]
+% is produced by the following code:
+% \begin{verbatim}
+% \[
+%   \gtCommRaw{\roleA}{\roleB}{
+%     \begin{array}{@{}l@{}}
+%       \commChoice{\LabelFmt{hello}}{\PayloadFmt{string}}{\gtG[hello]} \\
+%       \commChoice{\LabelFmt{bye}}{\PayloadFmt{unit}}{\gtG[bye]}
+%     \end{array}
+%   }
+% \]
+% \end{verbatim}
+%
+% \DescribeMacro{\gtRec}
+% |\gtRec| renders recursive types. It takes 2 arguments, namely the type
+% variable and the inner global type. For example,
+% \begin{verbatim}
+% \gtRec{t}{\gtG}
+% \end{verbatim}
+% $$\gtRec{t}{\gtG}$$
+%
+% \DescribeMacro{\gtRecVar}
+% |\gtRecVar| renders type variables. It takes a single argument, namely
+% the variable itself. For example,
+% \begin{verbatim}
+% \gtRecVar{t}
+% \end{verbatim}
+% $$\gtRecVar{t}$$
+%
+% \DescribeMacro{\gtEnd}
+% Finally, |\gtEnd| renders the termination. The macro does not take any
+% argument.
+% \begin{verbatim}
+% \gtEnd
+% \end{verbatim}
+% $$\gtEnd$$
+%
 % \section{Local Types}
 % We show the syntax of local types below:
 %   \[
 %     \begin{array}{rcll}
 %       \ltL & ::= & & \text{Local Types} \\
-%            & \mid  & \ltExtC[i \in I]{\rolep}{\lblL[i]}{\ltLi[i]}
+%            & \mid  & \ltExtC[i \in I]{\rolep}{\lblL[i]}{\payloadT[i]}{\ltLi[i]}
 %                    & \text{Receiving} \\
-%            & \mid  & \ltIntC[i \in I]{\rolep}{\lblL[i]}{\ltLi[i]}
+%            & \mid  & \ltIntC[i \in I]{\rolep}{\lblL[i]}{\payloadT[i]}{\ltLi[i]}
 %                    & \text{Sending} \\
 %            & \mid  & \ltRec{t}{\ltL}
 %                    & \text{Recursion} \\
@@ -298,6 +388,11 @@ Running "make install" installs the files in the local TeX tree.
 %   \]
 % \section{Processes}
 % This is future work.
+%
+%\StopEventually{^^A
+%  \PrintChanges
+%  \PrintIndex
+%}
 %
 % \section{Implementation}
 %
@@ -323,8 +418,9 @@ Running "make install" installs the files in the local TeX tree.
 \newcommand*{\mpstmacros@ifempty}[3]{%
   \ifthenelse{\isempty{#1}}{#2}{#3}%
 }%
-\newcommand{\commChoice}[2]{%
-  {#1} \mathbin{.} {#2}%
+\newcommand{\mpstDot}{\mathbin{.}}
+\newcommand{\commChoice}[3]{%
+  {#1}\mpstmacros@ifempty{#2}{}{(#2)}\mpstmacros@ifempty{#3}{}{\mpstDot{#3}}%
 }%
 %    \end{macrocode}
 %
@@ -348,11 +444,11 @@ Running "make install" installs the files in the local TeX tree.
 }{%
 {{#2} \to {#3} {\left\{ {#4} \right\}}_{\mpstmacros@withcolour{black}{#1}}}%
 }}}%
-\newcommand{\gtComm}[5][]{\gtCommRaw[#1]{#2}{#3}{%
-  \commChoice{#4}{#5}%
+\newcommand{\gtComm}[6][]{\gtCommRaw[#1]{#2}{#3}{%
+\commChoice{#4}{#5}{#6}%
 }}%
-\newcommand{\gtCommSingle}[4]{\GlobalFmt{%
-  {{#1} \to {#2} : \commChoice{#3}{#4}}%
+\newcommand{\gtCommSingle}[5]{\GlobalFmt{%
+{{#1} \to {#2} : \commChoice{#3}{#4}{#5}}%
 }}%
 \newcommand{\gtRec}[2]{\GlobalFmt{%
 \mu\TRecVarFmt{#1}.{#2}%
@@ -375,10 +471,10 @@ Running "make install" installs the files in the local TeX tree.
 \newcommand{\ltExtCSymbol}{\LocalFmt{\&}}%
 \newcommand{\ltIntCRaw}[3][]{\ltCRaw[#1]{#2}{#3}{\ltIntCSymbol}}%
 \newcommand{\ltExtCRaw}[3][]{\ltCRaw[#1]{#2}{#3}{\ltExtCSymbol}}%
-\newcommand{\ltIntC}[4][]{\ltIntCRaw[#1]{#2}{\commChoice{#3}{#4}}}%
-\newcommand{\ltExtC}[4][]{\ltExtCRaw[#1]{#2}{\commChoice{#3}{#4}}}%
-\newcommand{\ltIntCSingle}[3]{{#1}\ltIntCSymbol\mspace{2mu}{\commChoice{#2}{#3}}}%
-\newcommand{\ltExtCSingle}[3]{{#1}\ltExtCSymbol{\commChoice{#2}{#3}}}%
+\newcommand{\ltIntC}[5][]{\ltIntCRaw[#1]{#2}{\commChoice{#3}{#4}{#5}}}%
+\newcommand{\ltExtC}[5][]{\ltExtCRaw[#1]{#2}{\commChoice{#3}{#4}{#5}}}%
+\newcommand{\ltIntCSingle}[4]{{#1}\ltIntCSymbol\mspace{2mu}{\commChoice{#2}{#3}{#4}}}%
+\newcommand{\ltExtCSingle}[4]{{#1}\ltExtCSymbol{\commChoice{#2}{#3}{#4}}}%
 \newcommand{\ltRec}[2]{\LocalFmt{%
 \mu\TRecVarFmt{#1}.{#2}%
 }}%
