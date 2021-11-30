@@ -403,6 +403,128 @@ Running "make install" installs the files in the local TeX tree.
 %                    & \text{End}
 %     \end{array}
 %   \]
+%
+% The local type macros work similar to global type macros.
+% For both internal and external choices, there is a main macro, and
+% \texttt{Single} and \texttt{Raw} variants, similar to |\gtComm| and its
+% variants.
+%
+% \DescribeMacro{\ltIntC}
+% Internal choice is rendered using |\ltIntC|, it takes 5 arguments
+% (including an optional argument for the subscript, usually for the index set),
+% the remaining arguments are for receiving role, message
+% label, payload type, and continuation.
+% For example,
+% \begin{verbatim}
+% \ltIntC[i \in I]{\rolep}{\lblL[i]}{\payloadT[i]}{\ltLi[i]}
+% \end{verbatim}
+% $$\ltIntC[i \in I]{\rolep}{\lblL[i]}{\payloadT[i]}{\ltLi[i]}$$
+%
+% \DescribeMacro{\ltIntCSingle}
+% The singular form is rendered using |\ltIntCSingle|, which does not
+% include curly braces.
+% It takes 4 arguments, same as |\ltIntC| less the optional argument.
+% For example,
+% \begin{verbatim}
+% \ltIntCSingle{\rolep}{\lblL}{\payloadT}{\ltLi}
+% \end{verbatim}
+% $$\ltIntCSingle{\rolep}{\lblL}{\payloadT}{\ltLi}$$
+%
+% \DescribeMacro{\ltIntCRaw}
+% |\ltIntC| takes 3 arguments (including an optional argument for the subscript),
+% the remaining arguments are the receiving role, and the
+% content inside the curly braces.
+% For example:
+% \[
+%   \ltIntCRaw{\roleB}{
+%     \begin{array}{@{}l@{}}
+%       \commChoice{\LabelFmt{hello}}{\PayloadFmt{string}}{\ltL[hello]} \\
+%       \commChoice{\LabelFmt{bye}}{\PayloadFmt{unit}}{\ltL[bye]}
+%     \end{array}
+%   }
+% \]
+% is produced by the following code:
+% \begin{verbatim}
+% \[
+%   \ltIntCRaw{\roleB}{
+%     \begin{array}{@{}l@{}}
+%       \commChoice{\LabelFmt{hello}}{\PayloadFmt{string}}{\ltL[hello]} \\
+%       \commChoice{\LabelFmt{bye}}{\PayloadFmt{unit}}{\ltL[bye]}
+%     \end{array}
+%   }
+% \]
+% \end{verbatim}
+%
+% \DescribeMacro{\ltExtC}
+% External choice is rendered using |\ltExtC|, it takes 5 arguments
+% (including an optional argument for the subscript, usually for the index set),
+% the remaining arguments are for sending role, message
+% label, payload type, and continuation.
+% For example,
+% \begin{verbatim}
+% \ltExtC[i \in I]{\rolep}{\lblL[i]}{\payloadT[i]}{\ltLi[i]}
+% \end{verbatim}
+% $$\ltExtC[i \in I]{\rolep}{\lblL[i]}{\payloadT[i]}{\ltLi[i]}$$
+%
+% \DescribeMacro{\ltExtCSingle}
+% The singular form is rendered using |\ltExtCSingle|, which does not
+% include curly braces.
+% It takes 4 arguments, same as |\ltExtC| less the optional argument.
+% For example,
+% \begin{verbatim}
+% \ltExtCSingle{\rolep}{\lblL}{\payloadT}{\ltLi}
+% \end{verbatim}
+% $$\ltExtCSingle{\rolep}{\lblL}{\payloadT}{\ltLi}$$
+%
+% \DescribeMacro{\ltExtCRaw}
+% |\ltExtC| takes 3 arguments (including an optional argument for the subscript),
+% the remaining arguments are the sending role, and the
+% content inside the curly braces.
+% For example:
+% \[
+%   \ltExtCRaw{\roleB}{
+%     \begin{array}{@{}l@{}}
+%       \commChoice{\LabelFmt{hello}}{\PayloadFmt{string}}{\ltL[hello]} \\
+%       \commChoice{\LabelFmt{bye}}{\PayloadFmt{unit}}{\ltL[bye]}
+%     \end{array}
+%   }
+% \]
+% is produced by the following code:
+% \begin{verbatim}
+% \[
+%   \ltExtCRaw{\roleA}{
+%     \begin{array}{@{}l@{}}
+%       \commChoice{\LabelFmt{hello}}{\PayloadFmt{string}}{\ltL[hello]} \\
+%       \commChoice{\LabelFmt{bye}}{\PayloadFmt{unit}}{\ltL[bye]}
+%     \end{array}
+%   }
+% \]
+% \end{verbatim}
+%
+% \DescribeMacro{\ltRec}
+% |\ltRec| renders recursive types. It takes 2 arguments, namely the type
+% variable and the inner global type. For example,
+% \begin{verbatim}
+% \ltRec{t}{\ltL}
+% \end{verbatim}
+% $$\ltRec{t}{\ltL}$$
+%
+% \DescribeMacro{\ltRecVar}
+% |\ltRecVar| renders type variables. It takes a single argument, namely
+% the variable itself. For example,
+% \begin{verbatim}
+% \ltRecVar{t}
+% \end{verbatim}
+% $$\ltRecVar{t}$$
+%
+% \DescribeMacro{\ltEnd}
+% Finally, |\ltEnd| renders the termination. The macro does not take any
+% argument.
+% \begin{verbatim}
+% \ltEnd
+% \end{verbatim}
+% $$\ltEnd$$
+%
 % \section{Processes}
 % This is future work.
 %
