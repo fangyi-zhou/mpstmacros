@@ -139,6 +139,16 @@ Running "make install" installs the files in the local TeX tree.
 % \expandafter\DoNotIndex\expandafter{\string\}}
 % \expandafter\DoNotIndex\expandafter{\string\&}
 %
+% \newcommand{\rolep}{\RoleFmt{p}}
+% \newcommand{\roleq}{\RoleFmt{q}}
+% \newcommand{\roleA}{\RoleFmt{A}}
+% \newcommand{\roleB}{\RoleFmt{B}}
+% \newcommand{\lblL}[1][]{\LabelFmt{l_{#1}}}
+% \newcommand{\gtG}[1][]{\GlobalFmt{G_{#1}}}
+% \newcommand{\gtGi}[1][]{\GlobalFmt{{G}'_{#1}}}
+% \newcommand{\ltL}[1][]{\LocalFmt{L_{#1}}}
+% \newcommand{\ltLi}[1][]{\LocalFmt{{L}'_{#1}}}
+% \newcommand{\payloadT}[1][]{\PayloadFmt{T$_{#1}$}}
 %\title{\textsf{mpstmacros} --- Macros for multiparty session types}
 %\author{Fangyi Zhou\thanks{E-mail: me@fangyi.io}}
 %\date{Version \fileversion~\filedate}
@@ -168,6 +178,11 @@ Running "make install" installs the files in the local TeX tree.
 % Contributions are welcome, and can be made via pull requests on GitHub
 % \url{https://github.com/fangyi-zhou/mpstmacros}.
 %
+% The examples in this document sometimes use macro conventions such as
+% |\gtG| for a global type $\gtG$, and |\gtG[i]| for an subscript form
+% $\gtG[i]$.
+% If you find this useful, you may wish to look at
+% \url{https://github.com/fangyi-zhou/magicvariables-sty}.
 %
 % \section{Colouring and Formatting}
 % We first describe the macros for setting colours: by design, we wish to
@@ -262,17 +277,6 @@ Running "make install" installs the files in the local TeX tree.
 % level; and (2) Type variables and process variables should nonetheless be
 % in separate syntactic categories or namespaces.}
 % \end{itemize}
-%
-% \newcommand{\rolep}{\RoleFmt{p}}
-% \newcommand{\roleq}{\RoleFmt{q}}
-% \newcommand{\roleA}{\RoleFmt{A}}
-% \newcommand{\roleB}{\RoleFmt{B}}
-% \newcommand{\lblL}[1][]{\LabelFmt{l_{#1}}}
-% \newcommand{\gtG}[1][]{\GlobalFmt{G_{#1}}}
-% \newcommand{\gtGi}[1][]{\GlobalFmt{{G}'_{#1}}}
-% \newcommand{\ltL}[1][]{\LocalFmt{L_{#1}}}
-% \newcommand{\ltLi}[1][]{\LocalFmt{{L}'_{#1}}}
-% \newcommand{\payloadT}[1][]{\PayloadFmt{T$_{#1}$}}
 % \section{Global Types}
 % We show the syntax of global types below:
 %   \[
