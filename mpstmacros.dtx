@@ -102,7 +102,7 @@ Running "make install" installs the files in the local TeX tree.
 %<package>\NeedsTeXFormat{LaTeX2e}[1999/12/01]
 %<package>\ProvidesPackage{mpstmacros}
 %<*package>
-    [2021/11/30 v0.0.1 Initial version]
+    [2022/01/25 v0.0.2 Minor updates]
 %</package>
 %<package>\RequirePackage[svgnames]{xcolor}
 %<package>\RequirePackage{xifthen}
@@ -131,7 +131,7 @@ Running "make install" installs the files in the local TeX tree.
 % \DoNotIndex{\newcommand, \newenvironment, \color, \colorlet,
 %             \endinput, \upshape, \textbf, \textsf, \texttt, \mathbf, \mu,
 %             \left, \right, \to, \ifthenelse, \isempty,
-%             \mathbin, \mspace, \oplus}
+%             \mathbin, \mspace, \oplus, \mathsf}
 % \iffalse
 % https://tex.stackexchange.com/a/124809
 % \fi
@@ -257,6 +257,7 @@ Running "make install" installs the files in the local TeX tree.
 % |\LabelFmt| additionally applies san serif font.
 % For example, label $\LabelFmt{l}$, local type $\LocalFmt{L}$, global type
 % $\GlobalFmt{G}$, and process $\ProcFmt{P}$.
+% \changes{0.0.2}{2022/01/25}{Use sans serif font for labels}
 %
 % \item
 % \DescribeMacro{\TRecVarFmt}
