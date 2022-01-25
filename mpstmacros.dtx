@@ -254,6 +254,7 @@ Running "make install" installs the files in the local TeX tree.
 % \DescribeMacro{\ProcFmt}
 % |\LabelFmt|, |\LocalFmt|, |\GlobalFmt|, and |\ProcFmt|
 % simply apply the corresponding colours for the given syntax category.
+% |\LabelFmt| additionally applies san serif font.
 % For example, label $\LabelFmt{l}$, local type $\LocalFmt{L}$, global type
 % $\GlobalFmt{G}$, and process $\ProcFmt{P}$.
 %
@@ -566,7 +567,7 @@ Running "make install" installs the files in the local TeX tree.
 %    \begin{macrocode}
 \newcommand{\RoleFmt}[1]{\mpstmacros@withcolour{\colourRole}{\textsf{\upshape #1}}}%
 \newcommand{\PayloadFmt}[1]{\mpstmacros@withcolour{\colourPayload}{\texttt{#1}}}%
-\newcommand{\LabelFmt}[1]{\mpstmacros@withcolour{\colourLabel}{#1}}%
+\newcommand{\LabelFmt}[1]{\mpstmacros@withcolour{\colourLabel}{\mathsf{#1}}}%
 \newcommand{\LocalFmt}[1]{\mpstmacros@withcolour{\colourLocal}{#1}}%
 \newcommand{\GlobalFmt}[1]{\mpstmacros@withcolour{\colourGlobal}{#1}}%
 \newcommand{\ProcFmt}[1]{\mpstmacros@withcolour{\colourProc}{#1}}%
