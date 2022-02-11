@@ -102,10 +102,11 @@ Running "make install" installs the files in the local TeX tree.
 %<package>\NeedsTeXFormat{LaTeX2e}[1999/12/01]
 %<package>\ProvidesPackage{mpstmacros}
 %<*package>
-    [2022/01/25 v0.0.2 Minor updates]
+    [2022/02/11 v0.0.3 Fix missing package]
 %</package>
 %<package>\RequirePackage[svgnames]{xcolor}
 %<package>\RequirePackage{xifthen}
+%<package>\RequirePackage{amsmath}
 %<*driver>
 \documentclass{ltxdoc}
 \usepackage[a4paper,margin=25mm,left=50mm,nohead]{geometry}
@@ -183,6 +184,8 @@ Running "make install" installs the files in the local TeX tree.
 % $\gtG[i]$.
 % If you find this useful, you may wish to look at
 % \url{https://github.com/fangyi-zhou/magicvariables-sty}.
+%
+% \changes{0.0.3}{2022/02/11}{Fix missing \texttt{amsmath} import.}
 %
 % \section{Colouring and Formatting}
 % We first describe the macros for setting colours: by design, we wish to
