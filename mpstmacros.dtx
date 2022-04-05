@@ -307,7 +307,7 @@ Running "make install" installs the files in the local TeX tree.
 % \begin{verbatim}
 % \gtComm[i \in I]{\rolep}{\roleq}{\lblL[i]}{\payloadT[i]}{\gtGi[i]}
 % \end{verbatim}
-% $$\gtComm[i \in I]{\rolep}{\roleq}{\lblL[i]}{\payloadT[i]}{\gtGi[i]}$$
+% \[\gtComm[i \in I]{\rolep}{\roleq}{\lblL[i]}{\payloadT[i]}{\gtGi[i]}\]
 %
 % \DescribeMacro{\gtCommSingle}
 % The singular form is rendered using |\gtCommSingle|, which does not
@@ -317,7 +317,7 @@ Running "make install" installs the files in the local TeX tree.
 % \begin{verbatim}
 % \gtCommSingle{\rolep}{\roleq}{\lblL}{\payloadT}{\gtGi}
 % \end{verbatim}
-% $$\gtCommSingle{\rolep}{\roleq}{\lblL}{\payloadT}{\gtGi}$$
+% \[\gtCommSingle{\rolep}{\roleq}{\lblL}{\payloadT}{\gtGi}\]
 %
 % When giving empty arguments to some of the arguments, selected constructs
 % are not rendered by default.
@@ -329,14 +329,14 @@ Running "make install" installs the files in the local TeX tree.
 % \begin{verbatim}
 % \gtCommSingle{\rolep}{\roleq}{\lblL}{}{\gtGi}
 % \end{verbatim}
-% $$\gtCommSingle{\rolep}{\roleq}{\lblL}{}{\gtGi}$$
+% \[\gtCommSingle{\rolep}{\roleq}{\lblL}{}{\gtGi}\]
 % When the continuation argument is empty, the dot (indicating sequencing)
 % is not rendered.
 % For example,
 % \begin{verbatim}
 % \gtCommSingle{\rolep}{\roleq}{\lblL}{\payloadT}{}
 % \end{verbatim}
-% $$\gtCommSingle{\rolep}{\roleq}{\lblL}{\payloadT}{}$$
+% \[\gtCommSingle{\rolep}{\roleq}{\lblL}{\payloadT}{}\]
 %
 % \DescribeMacro{\gtCommRaw}
 % |\gtCommRaw| can also be used to render message construct, giving more
@@ -372,7 +372,7 @@ Running "make install" installs the files in the local TeX tree.
 % \begin{verbatim}
 % \gtRec{t}{\gtG}
 % \end{verbatim}
-% $$\gtRec{t}{\gtG}$$
+% \[\gtRec{t}{\gtG}\]
 %
 % \DescribeMacro{\gtRecVar}
 % |\gtRecVar| renders type variables. It takes a single argument, namely
@@ -380,7 +380,7 @@ Running "make install" installs the files in the local TeX tree.
 % \begin{verbatim}
 % \gtRecVar{t}
 % \end{verbatim}
-% $$\gtRecVar{t}$$
+% \[\gtRecVar{t}\]
 %
 % \DescribeMacro{\gtEnd}
 % Finally, |\gtEnd| renders the termination. The macro does not take any
@@ -388,7 +388,7 @@ Running "make install" installs the files in the local TeX tree.
 % \begin{verbatim}
 % \gtEnd
 % \end{verbatim}
-% $$\gtEnd$$
+% \[\gtEnd\]
 %
 % \section{Local Types}
 % We show the syntax of local types below:
@@ -422,7 +422,7 @@ Running "make install" installs the files in the local TeX tree.
 % \begin{verbatim}
 % \ltIntC[i \in I]{\rolep}{\lblL[i]}{\payloadT[i]}{\ltLi[i]}
 % \end{verbatim}
-% $$\ltIntC[i \in I]{\rolep}{\lblL[i]}{\payloadT[i]}{\ltLi[i]}$$
+% \[\ltIntC[i \in I]{\rolep}{\lblL[i]}{\payloadT[i]}{\ltLi[i]}\]
 %
 % \DescribeMacro{\ltIntCSingle}
 % The singular form is rendered using |\ltIntCSingle|, which does not
@@ -432,7 +432,7 @@ Running "make install" installs the files in the local TeX tree.
 % \begin{verbatim}
 % \ltIntCSingle{\rolep}{\lblL}{\payloadT}{\ltLi}
 % \end{verbatim}
-% $$\ltIntCSingle{\rolep}{\lblL}{\payloadT}{\ltLi}$$
+% \[\ltIntCSingle{\rolep}{\lblL}{\payloadT}{\ltLi}\]
 %
 % \DescribeMacro{\ltIntCRaw}
 % |\ltIntC| takes 3 arguments (including an optional argument for the subscript),
@@ -468,7 +468,7 @@ Running "make install" installs the files in the local TeX tree.
 % \begin{verbatim}
 % \ltExtC[i \in I]{\rolep}{\lblL[i]}{\payloadT[i]}{\ltLi[i]}
 % \end{verbatim}
-% $$\ltExtC[i \in I]{\rolep}{\lblL[i]}{\payloadT[i]}{\ltLi[i]}$$
+% \[\ltExtC[i \in I]{\rolep}{\lblL[i]}{\payloadT[i]}{\ltLi[i]}\]
 %
 % \DescribeMacro{\ltExtCSingle}
 % The singular form is rendered using |\ltExtCSingle|, which does not
@@ -478,7 +478,7 @@ Running "make install" installs the files in the local TeX tree.
 % \begin{verbatim}
 % \ltExtCSingle{\rolep}{\lblL}{\payloadT}{\ltLi}
 % \end{verbatim}
-% $$\ltExtCSingle{\rolep}{\lblL}{\payloadT}{\ltLi}$$
+% \[\ltExtCSingle{\rolep}{\lblL}{\payloadT}{\ltLi}\]
 %
 % \DescribeMacro{\ltExtCRaw}
 % |\ltExtC| takes 3 arguments (including an optional argument for the subscript),
@@ -511,7 +511,7 @@ Running "make install" installs the files in the local TeX tree.
 % \begin{verbatim}
 % \ltRec{t}{\ltL}
 % \end{verbatim}
-% $$\ltRec{t}{\ltL}$$
+% \[\ltRec{t}{\ltL}\]
 %
 % \DescribeMacro{\ltRecVar}
 % |\ltRecVar| renders type variables. It takes a single argument, namely
@@ -519,7 +519,7 @@ Running "make install" installs the files in the local TeX tree.
 % \begin{verbatim}
 % \ltRecVar{t}
 % \end{verbatim}
-% $$\ltRecVar{t}$$
+% \[\ltRecVar{t}\]
 %
 % \DescribeMacro{\ltEnd}
 % Finally, |\ltEnd| renders the termination. The macro does not take any
@@ -527,7 +527,7 @@ Running "make install" installs the files in the local TeX tree.
 % \begin{verbatim}
 % \ltEnd
 % \end{verbatim}
-% $$\ltEnd$$
+% \[\ltEnd\]
 %
 % \section{Processes}
 % This is future work.
