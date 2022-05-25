@@ -102,7 +102,7 @@ Running "make install" installs the files in the local TeX tree.
 %<package>\NeedsTeXFormat{LaTeX2e}[1999/12/01]
 %<package>\ProvidesPackage{mpstmacros}
 %<*package>
-    [2022/02/11 v0.0.3 Fix missing package]
+    [2022/05/25 v0.0.4 Miscellaneous fixes and improvements]
 %</package>
 %<package>\RequirePackage[svgnames]{xcolor}
 %<package>\RequirePackage{xifthen}
@@ -132,7 +132,7 @@ Running "make install" installs the files in the local TeX tree.
 % \DoNotIndex{\newcommand, \newenvironment, \color, \colorlet,
 %             \endinput, \upshape, \textbf, \textsf, \texttt, \mathbf, \mu,
 %             \left, \right, \to, \ifthenelse, \isempty,
-%             \mathbin, \mspace, \oplus, \mathsf}
+%             \mathbin, \mspace, \oplus, \mathsf, \dagger}
 % \iffalse
 % https://tex.stackexchange.com/a/124809
 % \fi
@@ -144,7 +144,7 @@ Running "make install" installs the files in the local TeX tree.
 % \newcommand{\roleq}{\RoleFmt{q}}
 % \newcommand{\roleA}{\RoleFmt{A}}
 % \newcommand{\roleB}{\RoleFmt{B}}
-% \newcommand{\lblL}[1][]{\LabelFmt{l_{#1}}}
+% \newcommand{\lblL}[1][]{\LabelFmt{\ensuremath{\ell_{#1}}}}
 % \newcommand{\gtG}[1][]{\GlobalFmt{G_{#1}}}
 % \newcommand{\gtGi}[1][]{\GlobalFmt{{G}'_{#1}}}
 % \newcommand{\ltL}[1][]{\LocalFmt{L_{#1}}}
@@ -263,6 +263,7 @@ Running "make install" installs the files in the local TeX tree.
 % For example, label $\LabelFmt{l}$, local type $\LocalFmt{L}$, global type
 % $\GlobalFmt{G}$, and process $\ProcFmt{P}$.
 % \changes{0.0.2}{2022/01/25}{Use sans serif font for labels}
+% \changes{0.0.4}{2022/05/25}{Apply text sans serif font for labels.}
 %
 % \item
 % \DescribeMacro{\TRecVarFmt}
@@ -531,6 +532,19 @@ Running "make install" installs the files in the local TeX tree.
 % \end{verbatim}
 % \[\ltEnd\]
 %
+% \DescribeMacro{\ltCRaw}
+% \DescribeMacro{\ltCSingle}
+% |\ltCRaw| and |\ltCSingle| are used to create macros for internal and
+% external choices, they take an additional argument in the end to their
+% counterparts, which is used for the symbol for the choice. For example,
+% you can render a generic choice using a dagger symbol $\dagger$:
+% \begin{verbatim}
+% \ltCRaw[i \in I]{\rolep}{\commChoice{\lblL[i]}{\payloadT[i]}{\ltLi[i]}}{\dagger}
+% \end{verbatim}
+% \[\ltCRaw[i \in I]{\rolep}{\commChoice{\lblL[i]}{\payloadT[i]}{\ltLi[i]}}{\dagger}\]
+%
+% \changes{0.0.4}{2022/05/25}{Add macros for generic choices.}
+%
 % \section{Processes}
 % This is future work.
 %
@@ -573,7 +587,7 @@ Running "make install" installs the files in the local TeX tree.
 %    \begin{macrocode}
 \newcommand{\RoleFmt}[1]{\mpstmacros@withcolour{\colourRole}{\textsf{\upshape #1}}}%
 \newcommand{\PayloadFmt}[1]{\mpstmacros@withcolour{\colourPayload}{\texttt{#1}}}%
-\newcommand{\LabelFmt}[1]{\mpstmacros@withcolour{\colourLabel}{\mathsf{#1}}}%
+\newcommand{\LabelFmt}[1]{\mpstmacros@withcolour{\colourLabel}{\textsf{#1}}}%
 \newcommand{\LocalFmt}[1]{\mpstmacros@withcolour{\colourLocal}{#1}}%
 \newcommand{\GlobalFmt}[1]{\mpstmacros@withcolour{\colourGlobal}{#1}}%
 \newcommand{\ProcFmt}[1]{\mpstmacros@withcolour{\colourProc}{#1}}%
@@ -585,7 +599,7 @@ Running "make install" installs the files in the local TeX tree.
 %    \begin{macrocode}
 \newcommand{\gtCommRaw}[4][]{\GlobalFmt{%
 \mpstmacros@ifempty{#1}{%
-{{#2} \to {#3} \left\{ {#4} \right\} }%
+{{#2} \to {#3} \left\{ {#4} \right\}}%
 }{%
 {{#2} \to {#3} {\left\{ {#4} \right\}}_{\mpstmacros@withcolour{black}{#1}}}%
 }}}%
@@ -605,6 +619,7 @@ Running "make install" installs the files in the local TeX tree.
 %    \end{macrocode}
 %
 % Here we define local type macros.
+% \changes{0.0.4}{2022/05/25}{Tweak spacings surrounding choice symbols.}
 %    \begin{macrocode}
 \newcommand{\ltCRaw}[4][]{\LocalFmt{%
 \mpstmacros@ifempty{#1}{%
@@ -612,14 +627,17 @@ Running "make install" installs the files in the local TeX tree.
 }{%
 {#2} {#4} {\left\{{#3}\right\}}_{\mpstmacros@withcolour{black}{#1}}%
 }}}%
-\newcommand{\ltIntCSymbol}{\LocalFmt{\oplus\mspace{-1mu}}}%
-\newcommand{\ltExtCSymbol}{\LocalFmt{\&}}%
-\newcommand{\ltIntCRaw}[3][]{\ltCRaw[#1]{#2}{#3}{\ltIntCSymbol}}%
-\newcommand{\ltExtCRaw}[3][]{\ltCRaw[#1]{#2}{#3}{\ltExtCSymbol}}%
+\newcommand{\ltCSingle}[5]{%
+{#1}{#5}{\commChoice{#2}{#3}{#4}}%
+}
+\newcommand{\ltIntCSymbol}{\LocalFmt{\mathbin{\oplus}}}%
+\newcommand{\ltExtCSymbol}{\LocalFmt{\mathbin{\&}}}%
+\newcommand{\ltIntCRaw}[3][]{\ltCRaw[#1]{#2}{#3}{\ltIntCSymbol\mspace{-2mu}}}%
+\newcommand{\ltExtCRaw}[3][]{\ltCRaw[#1]{#2}{#3}{\ltExtCSymbol\mspace{-2mu}}}%
 \newcommand{\ltIntC}[5][]{\ltIntCRaw[#1]{#2}{\commChoice{#3}{#4}{#5}}}%
 \newcommand{\ltExtC}[5][]{\ltExtCRaw[#1]{#2}{\commChoice{#3}{#4}{#5}}}%
-\newcommand{\ltIntCSingle}[4]{{#1}\ltIntCSymbol\mspace{2mu}{\commChoice{#2}{#3}{#4}}}%
-\newcommand{\ltExtCSingle}[4]{{#1}\ltExtCSymbol{\commChoice{#2}{#3}{#4}}}%
+\newcommand{\ltIntCSingle}[4]{\ltCSingle{#1}{#2}{#3}{#4}{\ltIntCSymbol}}
+\newcommand{\ltExtCSingle}[4]{\ltCSingle{#1}{#2}{#3}{#4}{\ltExtCSymbol}}
 \newcommand{\ltRec}[2]{\LocalFmt{%
 \mu\TRecVarFmt{#1}.{#2}%
 }}%
