@@ -15,8 +15,8 @@ jobs:
             apk add make
             make
       - name: Release
+        if: github.event_name == 'push' && github.ref_name == 'main'
         uses: softprops/action-gh-release@v1
-        if: github.ref_name == "main"
         with:
           name: automated release
           prerelease: true
