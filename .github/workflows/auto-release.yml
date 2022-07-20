@@ -1,0 +1,26 @@
+name: Auto release
+
+on: push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Build
+        uses: xu-cheng/texlive-action/full@v1
+        with:
+          run: |
+            apk add make
+            make
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        if: github.ref_name == "main"
+        with:
+          name: automated release
+          prerelease: true
+          files: |
+            mpstmacros.sty
+            mpstmacros.pdf
+            mpstmacros.dtx
