@@ -19,6 +19,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           name: automated release
+          tag_name: auto_release
           prerelease: true
           files: |
             mpstmacros.sty
