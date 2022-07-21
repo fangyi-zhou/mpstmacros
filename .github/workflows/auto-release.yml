@@ -25,3 +25,6 @@ jobs:
             mpstmacros.sty
             mpstmacros.pdf
             mpstmacros.dtx
+      - name: Update tag
+        if: github.event_name == 'push' && github.ref_name == 'main'
+        run: git tag auto_release -f && git push origin auto_release -f
