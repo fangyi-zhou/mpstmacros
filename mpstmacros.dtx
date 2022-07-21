@@ -102,7 +102,7 @@ Running "make install" installs the files in the local TeX tree.
 %<package>\NeedsTeXFormat{LaTeX2e}[1999/12/01]
 %<package>\ProvidesPackage{mpstmacros}
 %<*package>
-    [2022/05/25 v0.0.4 Miscellaneous fixes and improvements]
+    [2022/07/22 v0.0.5 Colour changes]
 %</package>
 %<package>\RequirePackage[svgnames]{xcolor}
 %<package>\RequirePackage{xifthen}
@@ -132,7 +132,7 @@ Running "make install" installs the files in the local TeX tree.
 % \DoNotIndex{\newcommand, \newenvironment, \color, \colorlet,
 %             \endinput, \upshape, \textbf, \textsf, \texttt, \mathbf, \mu,
 %             \left, \right, \to, \ifthenelse, \isempty,
-%             \mathbin, \mspace, \oplus, \mathsf, \dagger}
+%             \mathbin, \mspace, \oplus, \mathsf, \dagger, \definecolor}
 % \iffalse
 % https://tex.stackexchange.com/a/124809
 % \fi
@@ -200,7 +200,9 @@ Running "make install" installs the files in the local TeX tree.
 % \item
 % \DescribeMacro{\colourRole}
 % |\colourRole| defines the colour for roles, by default it is set to
-% \withcolour{\colourRole}{Teal}.
+% \withcolour{\colourRole}{(darker) Teal}\footnote{This is a darker version
+% of standard Teal, for better contrast on white background.}.
+% \changes{0.0.5}{2022/07/22}{Change colour of role to darker teal.}
 %
 % \item
 % \DescribeMacro{\colourLabel}
@@ -210,7 +212,9 @@ Running "make install" installs the files in the local TeX tree.
 % \item
 % \DescribeMacro{\colourPayload}
 % |\colourPayload| defines the colour for payload types, by default it is
-% set to \withcolour{\colourPayload}{DarkOrchid}.
+% set to \withcolour{\colourPayload}{DarkGreen}.
+% \changes{0.0.5}{2022/07/22}{Change colour of payload from dark orchid to
+% dark green.}
 %
 % \item
 % \DescribeMacro{\colourLocal}
@@ -220,12 +224,15 @@ Running "make install" installs the files in the local TeX tree.
 % \item
 % \DescribeMacro{\colourGlobal}
 % |\colourGlobal| defines the colour for payload types, by default it is
-% set to \withcolour{\colourGlobal}{VioletRed}.
+% set to \withcolour{\colourGlobal}{Brown}.
+% \changes{0.0.5}{2022/07/22}{Change colour of global types from violet red to
+% brown.}
 %
 % \item
 % \DescribeMacro{\colourProc}
 % |\colourProc| defines the colour for processes, by default it is set to
-% \withcolour{\colourProc}{Maroon}.
+% \withcolour{\colourProc}{Purple}.
+% \changes{0.0.5}{2022/07/22}{Change colour of processes from maroon to purple.}
 %
 % \item
 % \DescribeMacro{\colourProcVar}
@@ -561,12 +568,13 @@ Running "make install" installs the files in the local TeX tree.
 %
 % We first define the colours.
 %    \begin{macrocode}
-\newcommand{\colourRole}{Teal}%
+\definecolor{darkerTeal}{HTML}{006060}
+\newcommand{\colourRole}{darkerTeal}%
 \newcommand{\colourLabel}{Indigo}%
-\newcommand{\colourPayload}{DarkOrchid}%
+\newcommand{\colourPayload}{DarkGreen}%
 \newcommand{\colourLocal}{NavyBlue}%
-\newcommand{\colourGlobal}{VioletRed}%
-\newcommand{\colourProc}{Maroon}%
+\newcommand{\colourGlobal}{Brown}%
+\newcommand{\colourProc}{Purple}%
 \newcommand{\colourProcVar}{Red}%
 \newcommand{\colourNet}{black}%
 %    \end{macrocode}
