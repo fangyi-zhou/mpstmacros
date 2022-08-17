@@ -102,7 +102,7 @@ Running "make install" installs the files in the local TeX tree.
 %<package>\NeedsTeXFormat{LaTeX2e}[1999/12/01]
 %<package>\ProvidesPackage{mpstmacros}
 %<*package>
-    [2022/07/22 v0.0.5 Colour changes]
+    [2022/08/01 v0.0.6 Payload variables]
 %</package>
 %<package>\RequirePackage[svgnames]{xcolor}
 %<package>\RequirePackage{xifthen}
@@ -179,6 +179,7 @@ Running "make install" installs the files in the local TeX tree.
 % \newcommand{\ltL}[1][]{\LocalFmt{L_{#1}}}
 % \newcommand{\ltLi}[1][]{\LocalFmt{{L}'_{#1}}}
 % \newcommand{\payloadT}[1][]{\PayloadFmt{T$_{#1}$}}
+% \newcommand{\expX}[1][]{\VarFmt{x_{#1}}}
 %
 % \changes{0.0.3}{2022/02/11}{Fix missing \texttt{amsmath} import.}
 %
@@ -234,7 +235,14 @@ Running "make install" installs the files in the local TeX tree.
 % |\colourProcVar| defines the colour for process variables, by default it
 % is set to \withcolour{\colourProcVar}{Red}. Note that this colour does
 % not apply to type variables in a recursive type.
+
+% \item
+% \DescribeMacro{\colourVar}
+% |\colourVar| defines the colour for (payload) variables, by default it
+% is set to \withcolour{\colourVar}{Blue}. This colour is not used unless
+% the payload variables are enabled.
 % \end{itemize}
+% \changes{0.0.6}{2022/08/01}{Add payload variables.}
 %
 % Then, we use these colours to define formatting macros: they take one
 % argument, which is the content to be formatted. Usually there is no need
@@ -259,13 +267,15 @@ Running "make install" installs the files in the local TeX tree.
 % \DescribeMacro{\LocalFmt}
 % \DescribeMacro{\GlobalFmt}
 % \DescribeMacro{\ProcFmt}
-% |\LabelFmt|, |\LocalFmt|, |\GlobalFmt|, and |\ProcFmt|
+% \DescribeMacro{\VarFmt}
+% |\LabelFmt|, |\LocalFmt|, |\GlobalFmt|, |\ProcFmt| and |\VarFmt|
 % simply apply the corresponding colours for the given syntax category.
 % |\LabelFmt| additionally applies san serif font.
 % For example, label $\LabelFmt{l}$, local type $\LocalFmt{L}$, global type
-% $\GlobalFmt{G}$, and process $\ProcFmt{P}$.
+% $\GlobalFmt{G}$, process $\ProcFmt{P}$, and variable $\VarFmt{x}$.
 % \changes{0.0.2}{2022/01/25}{Use sans serif font for labels}
 % \changes{0.0.4}{2022/05/25}{Apply text sans serif font for labels.}
+% \changes{0.0.6}{2022/08/01}{Add payload variables.}
 %
 % \item
 % \DescribeMacro{\TRecVarFmt}
@@ -308,6 +318,7 @@ Running "make install" installs the files in the local TeX tree.
 % \newcommand{\ltL}[1][]{\LocalFmt{L_{#1}}}
 % \newcommand{\ltLi}[1][]{\LocalFmt{{L}'_{#1}}}
 % \newcommand{\payloadT}[1][]{\PayloadFmt{T$_{#1}$}}
+% \newcommand{\expX}[1][]{\VarFmt{x_{#1}}}
 % \end{verbatim}
 %
 % \DescribeMacro{\mpstDot}
@@ -599,6 +610,7 @@ Running "make install" installs the files in the local TeX tree.
 \newcommand{\colourProc}{Purple}%
 \newcommand{\colourProcVar}{Red}%
 \newcommand{\colourNet}{black}%
+\newcommand{\colourVar}{blue}%
 %    \end{macrocode}
 %
 % Some auxiliary helper functions:
@@ -623,6 +635,7 @@ Running "make install" installs the files in the local TeX tree.
 \newcommand{\ProcFmt}[1]{\mpstmacros@withcolour{\colourProc}{#1}}%
 \newcommand{\TRecVarFmt}[1]{\mathbf{#1}}%
 \newcommand{\PRecVarFmt}[1]{\mpstmacros@withcolour{\colourProcVar}{#1}}%
+\newcommand{\VarFmt}[1]{\mpstmacros@withcolour{\colourVar}{#1}}%
 %    \end{macrocode}
 %
 % Here we define global type macros.
